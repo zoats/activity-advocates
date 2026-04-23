@@ -942,8 +942,30 @@
       alert('Please fill in your name and email address.');
       return;
     }
-    document.getElementById('form-fields').style.display = 'none';
-    document.getElementById('form-success').style.display = 'block';
+
+    const data = {
+      name: fname + ' ' + document.getElementById('lname').value.trim(),
+      email: email,
+      reason: document.getElementById('reason').value,
+      message: document.getElementById('message').value
+    };
+
+    fetch('https://formspree.io/f/xdaypypp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(res => {
+      if (res.ok) {
+        document.getElementById('form-fields').style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+      } else {
+        alert('Something went wrong. Please try again or call us at (619) 320-8866.');
+      }
+    })
+    .catch(() => {
+      alert('Something went wrong. Please try again or call us at (619) 320-8866.');
+    });
   }
 </script>
 </body>
